@@ -2,7 +2,7 @@ NAMESPACE=GAIAD
 PROJECT=cosmoshub
 PROJECT_BIN=gaiad
 PROJECT_DIR=.gaia
-VERSION=v8.0.0
+VERSION=v8.0.1
 REPOSITORY=https://github.com/cosmos/gaia
 
 .PHONY: build
