@@ -3,7 +3,7 @@ NAMESPACE=OSMOSISD
 PROJECT=osmosis
 PROJECT_BIN=osmosisd
 PROJECT_DIR=.osmosisd
-VERSION=v15.0.0
+VERSION=v15.1.0
 REPOSITORY=https://github.com/osmosis-labs/osmosis
 
 .PHONY: build
