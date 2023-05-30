@@ -1,16 +1,14 @@
-GOLANG_VERSION=1.20-buster
 NAMESPACE=GAIAD
 PROJECT=cosmoshub
 PROJECT_BIN=gaiad
 PROJECT_DIR=.gaia
-VERSION=v10.0.0
+VERSION=v9.1.1
 REPOSITORY=https://github.com/cosmos/gaia
 
 .PHONY: build
 
 build:
 	docker build -t shapeshiftdao/${PROJECT}:${VERSION} \
-		--build-arg GOLANG_VERSION=${GOLANG_VERSION} \
 		--build-arg NAMESPACE=${NAMESPACE} \
 		--build-arg PROJECT=${PROJECT} \
 		--build-arg PROJECT_BIN=${PROJECT_BIN} \
