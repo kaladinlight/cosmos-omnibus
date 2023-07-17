@@ -1,9 +1,9 @@
-GOLANG_VERSION=1.19-buster
+GOLANG_VERSION=1.20-buster
 NAMESPACE=OSMOSISD
 PROJECT=osmosis
 PROJECT_BIN=osmosisd
 PROJECT_DIR=.osmosisd
-VERSION=v15.2.0
+VERSION=v16.1.0
 REPOSITORY=https://github.com/osmosis-labs/osmosis
 
 .PHONY: build
