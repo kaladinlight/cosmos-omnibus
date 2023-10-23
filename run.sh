@@ -73,16 +73,17 @@ fi
 
 # polkachu
 if [ -n "$P2P_POLKACHU" ]; then
-  POLKACHU_CHAIN=`curl -s https://polkachu.com/api/v1/chains | jq -r --arg CHAIN_ID "$CHAIN_ID" 'first(.[] | select(.chain_id==$CHAIN_ID))'`
+  [ -z "$POLKACHU_NETWORK" ] && echo "POLKACHU_NETWORK not found" && exit
+
+  POLKACHU_CHAIN=`curl -s https://polkachu.com/api/v2/chains/$POLKACHU_NETWORK | jq -r '.'`
 
   if [ -z "$POLKACHU_CHAIN" ]; then
     echo "polkachu does not support this chain"
   else
-    export POLKACHU_PEERS_ENABLED=$(echo $POLKACHU_CHAIN | jq -r '.live_peers.active')
-    export POLKACHU_SEED_NODE_ENABLED=$(echo $POLKACHU_CHAIN | jq -r '.seed_node.active')
+    export POLKACHU_SEED_NODE_ENABLED=$(echo $POLKACHU_CHAIN | jq -r '.polkachu_services.seed.active')
 
     if [ $POLKACHU_SEED_NODE_ENABLED ]; then
-      export POLKACHU_SEED_NODE=$(echo $POLKACHU_CHAIN | jq -r '.seed_node.url')
+      export POLKACHU_SEED_NODE=$(echo $POLKACHU_CHAIN | jq -r '.polkachu_services.seed.seed')
 
       if [ -n "$P2P_SEEDS" ]; then
         export P2P_SEEDS="$P2P_SEEDS,$POLKACHU_SEED_NODE"
@@ -91,18 +92,6 @@ if [ -n "$P2P_POLKACHU" ]; then
       fi
     else
       echo "polkachu seed node is not active for this chain"
-    fi
-
-    if [ $POLKACHU_PEERS_ENABLED ]; then
-      export POLKACHU_PEERS=`curl -Ls $(echo $POLKACHU_CHAIN | jq -r '.live_peers.endpoint') | jq -r '.live_peers | join(",")'`
-
-      if [ -n "$P2P_SEEDS" ]; then
-        export P2P_SEEDS="$P2P_SEEDS,$POLKACHU_PEERS"
-      else
-        export P2P_SEEDS="$POLKACHU_PEERS"
-      fi
-    else
-      echo "polkachu live peers is not active for this chain"
     fi
   fi
 fi
